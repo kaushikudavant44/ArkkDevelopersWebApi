@@ -110,5 +110,20 @@ public class EmpDetailsApiController {
 		return branchSiteDetailsRes;
 	}
 	
-	
+
+	@RequestMapping(value = { "/getBranchDetailsByEmpId" }, method = RequestMethod.POST)
+	public @ResponseBody List<BranchSiteDetails> getBranchDetailsByEmpId(@RequestParam("empId") int empId)
+	{
+		List<BranchSiteDetails> branchSiteDetailsList=new ArrayList<BranchSiteDetails>();
+		try
+		{
+			branchSiteDetailsList= branchSiteDetailsRepository.getBranchDetailsByEmpId(empId);
+		} 
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		
+		return branchSiteDetailsList;
+	}
 }
