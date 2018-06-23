@@ -18,9 +18,11 @@ public interface BranchSiteDetailsRepository extends JpaRepository<BranchSiteDet
 	List<BranchSiteDetails> findAll();
 
 	
-	@Query(value=" SELECT * from branch_site_details where branch_site_id IN(select branch from emp_details where emp_id=:empId) ",nativeQuery=true)
+	@Query(value=" SELECT * from branch_site_details where branch_site_id IN(:branchList) ",nativeQuery=true)
 
-	List<BranchSiteDetails> getBranchDetailsByEmpId(@Param("empId")int empId);
+	List<BranchSiteDetails> getBranchDetailsBranchId(@Param("branchList")List<String> branchList);
+
+	List<BranchSiteDetails> findByType(int type);
 	
 	
 }

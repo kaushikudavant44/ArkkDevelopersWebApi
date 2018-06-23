@@ -1,5 +1,5 @@
 package com.bionische.arkkdevelopers.controller;
-
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,9 +115,23 @@ public class EmpDetailsApiController {
 	public @ResponseBody List<BranchSiteDetails> getBranchDetailsByEmpId(@RequestParam("empId") int empId)
 	{
 		List<BranchSiteDetails> branchSiteDetailsList=new ArrayList<BranchSiteDetails>();
+		
+		EmployeeDetails employeeDetailsRes=new EmployeeDetails();
 		try
 		{
-			branchSiteDetailsList= branchSiteDetailsRepository.getBranchDetailsByEmpId(empId);
+			employeeDetailsRes= employeeDetailsRepository.findByEmpId(empId);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		List<String> branchList=new ArrayList<String>();
+		
+		branchList= Arrays.asList(employeeDetailsRes.getBranch().split(","));
+		
+		try
+		{
+			
+			branchSiteDetailsList= branchSiteDetailsRepository.getBranchDetailsBranchId(branchList);
 		} 
 		catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
@@ -126,4 +140,26 @@ public class EmpDetailsApiController {
 		
 		return branchSiteDetailsList;
 	}
+
+
+	@RequestMapping(value = { "/getBranchSiteDetailsByType" }, method = RequestMethod.POST)
+	public @ResponseBody List<BranchSiteDetails> getBranchSiteDetailsByType(@RequestParam("type") int type)
+	{
+		List<BranchSiteDetails> branchSiteDetailsList=new ArrayList<BranchSiteDetails>();
+		
+		  
+		try
+		{
+			
+			branchSiteDetailsList= branchSiteDetailsRepository.findByType(type);
+		} 
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		
+		return branchSiteDetailsList;
+	}
+	
+	
 }
