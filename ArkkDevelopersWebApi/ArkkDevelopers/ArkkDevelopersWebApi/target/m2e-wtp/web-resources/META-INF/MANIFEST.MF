@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: ArkkDevelopers
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Jarves
+Implementation-Vendor-Id: com.bionische.arrkdevelopers
+Build-Jdk: 1.8.0_161
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/ArkkDevelopers
+Created-By: Maven Integration for Eclipse
+
