@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bionische.arkkdevelopers.model.Info;
 import com.bionische.arkkdevelopers.model.LabourDetails;
 import com.bionische.arkkdevelopers.repository.LabourDetailsRepository;
 
@@ -44,7 +45,7 @@ catch (Exception e) {
 		LabourDetails labourDetailsRes=new LabourDetails();
 
 		try {
-			labourDetailsRes=	labourDetailsRepository.findByLabourId(labourId);
+			labourDetailsRes=	labourDetailsRepository.findByLabourIdAndInt1(labourId, 0);
 			
 		}
 catch (Exception e) {
@@ -61,7 +62,7 @@ catch (Exception e) {
 		List<LabourDetails> labourDetailsList=new ArrayList<LabourDetails>();
 
 		try {
-			labourDetailsList=	labourDetailsRepository.findBySiteContaining(siteId);
+			labourDetailsList=	labourDetailsRepository.findBySiteContainingAndInt1(siteId, 0);
 			
 		}
 		
@@ -73,5 +74,29 @@ catch (Exception e) {
 		return labourDetailsList;
 		
 	}
+	
+	
+	
+	@RequestMapping(value = { "/deleteLabour" }, method = RequestMethod.POST)
+	public @ResponseBody Info  deleteLabour(@RequestParam("labourId") int labourId)
+	{
+		Info info=new Info();
+int res=0;
+		try {
+			res=	labourDetailsRepository.deleteLabour(labourId);
+			if(res>0)
+			{
+				info.setError(false);
+				info.setMessage("Delete Successfully");
+			}
+		}
+catch (Exception e) {
+	System.out.println(e.getMessage());// TODO: handle exception
+}
+		
+		return info;
+	}
+	
+	
 	
 } 
