@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bionische.arkkdevelopers.model.BranchSiteDetails;
 import com.bionische.arkkdevelopers.model.EmployeeDetails;
+import com.bionische.arkkdevelopers.model.Info;
 import com.bionische.arkkdevelopers.repository.BranchSiteDetailsRepository;
 import com.bionische.arkkdevelopers.repository.EmployeeDetailsRepository;
 
@@ -161,5 +162,30 @@ public class EmpDetailsApiController {
 		return branchSiteDetailsList;
 	}
 	
+	@RequestMapping(value = { "/deleteEmployeeById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteEmployeeById(@RequestParam("empId") int empId)
+	{
+		EmployeeDetails employeeDetailsRes=new EmployeeDetails();
+		Info info=new Info();
+		try
+		{
+			int res= employeeDetailsRepository.updateEmployeeDeleteStatus(empId);
+			if(res>0)
+			{
+				info.setMessage("Employee Deleted Successfully!!");
+				info.setError(false);
+			}
+			else {
+				info.setMessage(" Delete Failed!!");
+				info.setError(true);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		
+		return info;
+	}
 	
 }
