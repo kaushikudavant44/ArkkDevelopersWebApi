@@ -1,5 +1,8 @@
 package com.bionische.arkkdevelopers.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +52,26 @@ catch (Exception e) {
 }
 		
 		return labourDetailsRes;
+	}
+	
+	
+	@RequestMapping(value = { "/getLabourDetailsBySiteId" }, method = RequestMethod.POST)
+	public @ResponseBody List<LabourDetails>  getLabourDetailsBySiteId(@RequestParam("siteId") int siteId)
+	{
+		List<LabourDetails> labourDetailsList=new ArrayList<LabourDetails>();
+
+		try {
+			labourDetailsList=	labourDetailsRepository.findBySiteContaining(siteId);
+			
+		}
+		
+		
+catch (Exception e) {
+	System.out.println(e.getMessage());// TODO: handle exception
+}
+		
+		return labourDetailsList;
+		
 	}
 	
 } 
