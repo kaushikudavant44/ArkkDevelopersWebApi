@@ -16,11 +16,10 @@ public interface EmployeeDetailsRepository extends JpaRepository<EmployeeDetails
 	
 	EmployeeDetails save(EmployeeDetails employeeDetails);
 	
-	@Query(value=" SELECT * from emp_details where emp_id=:empId AND del_status=0",nativeQuery=true)
-	EmployeeDetails findByEmpId(@Param("empId")int empId);
+	EmployeeDetails findByEmpIdAndInt1(int empId,int int1);
 	
 	
-	List<EmployeeDetails> findByBranchContaining(String branch);
+	List<EmployeeDetails> findByBranchContainingAndInt1(String branch,int int1);
 	
 	@Transactional
 	@Modifying
