@@ -50,7 +50,7 @@ public class EmpDetailsApiController {
 		EmployeeDetails employeeDetailsRes=new EmployeeDetails();
 		try
 		{
-			employeeDetailsRes= employeeDetailsRepository.findByEmpId(empId);
+			employeeDetailsRes= employeeDetailsRepository.findByEmpIdAndInt1(empId,0);
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
@@ -67,7 +67,7 @@ public class EmpDetailsApiController {
 		List<EmployeeDetails> employeeDetailsList=new ArrayList<EmployeeDetails>();
 		try
 		{
-			employeeDetailsList= employeeDetailsRepository.findByBranchContaining(branchId);
+			employeeDetailsList= employeeDetailsRepository.findByBranchContainingAndInt1(branchId,0);
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
@@ -120,7 +120,7 @@ public class EmpDetailsApiController {
 		EmployeeDetails employeeDetailsRes=new EmployeeDetails();
 		try
 		{
-			employeeDetailsRes= employeeDetailsRepository.findByEmpId(empId);
+			employeeDetailsRes= employeeDetailsRepository.findByEmpIdAndInt1(empId,0);
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
@@ -170,6 +170,7 @@ public class EmpDetailsApiController {
 		try
 		{
 			int res= employeeDetailsRepository.updateEmployeeDeleteStatus(empId);
+			System.out.println("res:"+res);
 			if(res>0)
 			{
 				info.setMessage("Employee Deleted Successfully!!");
