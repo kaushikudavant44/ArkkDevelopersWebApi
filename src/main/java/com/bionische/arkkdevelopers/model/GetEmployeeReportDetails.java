@@ -21,7 +21,10 @@ public class GetEmployeeReportDetails {
 	@Column(name="name")
 	private String name;
 	
-	 
+	@Column(name="branch")
+	private String branch;
+	
+	
 	@Column(name="date")
 	private String date;
 	
@@ -82,11 +85,21 @@ public class GetEmployeeReportDetails {
 		this.deviceLogId = deviceLogId;
 	}
 
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
 	@Override
 	public String toString() {
 		return "GetEmployeeReportDetails [deviceLogId=" + deviceLogId + ", empId=" + empId + ", name=" + name
-				+ ", date=" + date + ", inTime=" + inTime + ", outTime=" + outTime + "]";
+				+ ", branch=" + branch + ", date=" + date + ", inTime=" + inTime + ", outTime=" + outTime + "]";
 	}
+
+	 
 
 	 
 
