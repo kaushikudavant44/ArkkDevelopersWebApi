@@ -23,6 +23,6 @@ public interface GetEmployeeReportDetailsRepository extends JpaRepository<GetEmp
 			+ " COALESCE((SELECT TIME(da.LogDate) FROM DeviceLogs da WHERE da.UserId=d.UserId AND DATE(da.LogDate)=DATE(d.LogDate)"
 			+ " AND da.Direction='out'), 0)AS out_time FROM DeviceLogs d, labour_details e, branch_site_details b WHERE"
 			+ " d.UserId=e.labour_id AND d.UserId=:userId AND d.Direction='out' AND d.LogDate BETWEEN :fromDate AND :toDate AND d.DeviceId=b.device_id GROUP by d.LogDate" ,nativeQuery=true)
-	List<GetEmployeeReportDetails> getAttendenceByLabourIdAndBetweenDate(@Param("userId")String userId, @Param("fromDate")String fromDate, @Param("toDate")String toDate);
+	List<GetEmployeeReportDetails> getAttendenceByUserIdAndBetweenDate(@Param("userId")String userId, @Param("fromDate")String fromDate, @Param("toDate")String toDate);
 	 
 }
