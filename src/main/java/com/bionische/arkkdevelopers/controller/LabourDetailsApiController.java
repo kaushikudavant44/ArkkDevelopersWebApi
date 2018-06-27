@@ -105,7 +105,7 @@ catch (Exception e) {
 	
 	
 	@RequestMapping(value = { "/getEmpAttendenceByLabourIdAndDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetEmployeeReportDetails> getEmpAttendenceByLabourIdAndDate(@RequestParam("empId") String empId, @RequestParam("fromDate")String fromDate, @RequestParam("toDate")String toDate)
+	public @ResponseBody List<GetEmployeeReportDetails> getEmpAttendenceByLabourIdAndDate(@RequestParam("labourId") String empId, @RequestParam("from")String fromDate, @RequestParam("to")String toDate)
 	{
 		List<GetEmployeeReportDetails> getEmployeeReportDetailsList=new ArrayList<GetEmployeeReportDetails>();
 		Info info=new Info();

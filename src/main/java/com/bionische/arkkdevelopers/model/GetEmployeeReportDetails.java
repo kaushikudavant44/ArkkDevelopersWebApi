@@ -16,13 +16,13 @@ public class GetEmployeeReportDetails {
 	
 	
 	@Column(name="user_Id")
-	private int empId;
+	private int userId;
 	
 	@Column(name="name")
 	private String name;
 	
 	@Column(name="branch")
-	private String branch;
+	private String branchSite;
 	
 	
 	@Column(name="date")
@@ -33,18 +33,23 @@ public class GetEmployeeReportDetails {
 	
 	@Column(name="out_time")
 	private String outTime;
-	
-
-	public int getEmpId() {
-		return empId;
+ 
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setEmpId(int empId) {
-		this.empId = empId;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
+	public String getBranchSite() {
+		return branchSite;
+	}
 
-	 
+	public void setBranchSite(String branchSite) {
+		this.branchSite = branchSite;
+	}
+
 	public String getDate() {
 		return date;
 	}
@@ -85,19 +90,13 @@ public class GetEmployeeReportDetails {
 		this.deviceLogId = deviceLogId;
 	}
 
-	public String getBranch() {
-		return branch;
-	}
-
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-
 	@Override
 	public String toString() {
-		return "GetEmployeeReportDetails [deviceLogId=" + deviceLogId + ", empId=" + empId + ", name=" + name
-				+ ", branch=" + branch + ", date=" + date + ", inTime=" + inTime + ", outTime=" + outTime + "]";
+		return "GetEmployeeReportDetails [deviceLogId=" + deviceLogId + ", userId=" + userId + ", name=" + name
+				+ ", branchSite=" + branchSite + ", date=" + date + ", inTime=" + inTime + ", outTime=" + outTime + "]";
 	}
+
+	
 
 	 
 
