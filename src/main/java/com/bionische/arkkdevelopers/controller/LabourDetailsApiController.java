@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bionische.arkkdevelopers.model.GetEmployeeReportDetails;
 import com.bionische.arkkdevelopers.model.Info;
 import com.bionische.arkkdevelopers.model.LabourDetails;
+import com.bionische.arkkdevelopers.repository.GetEmployeeReportDetailsRepository;
 import com.bionische.arkkdevelopers.repository.LabourDetailsRepository;
 
 @RestController
@@ -21,6 +23,10 @@ public class LabourDetailsApiController {
 	
 	@Autowired
 	LabourDetailsRepository labourDetailsRepository;
+	
+	@Autowired
+	GetEmployeeReportDetailsRepository getEmployeeReportDetailsRepository;
+	
 	
 	@RequestMapping(value = { "/insertLabourDetails" }, method = RequestMethod.POST)
 	public @ResponseBody LabourDetails  insertLabourDetails(@RequestBody LabourDetails LabourDetails)
@@ -97,6 +103,25 @@ catch (Exception e) {
 		return info;
 	}
 	
+	
+	@RequestMapping(value = { "/getEmpAttendenceByLabourIdAndDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetEmployeeReportDetails> getEmpAttendenceByLabourIdAndDate(@RequestParam("empId") String empId, @RequestParam("fromDate")String fromDate, @RequestParam("toDate")String toDate)
+	{
+		List<GetEmployeeReportDetails> getEmployeeReportDetailsList=new ArrayList<GetEmployeeReportDetails>();
+		Info info=new Info();
+		try
+		{
+			getEmployeeReportDetailsList= getEmployeeReportDetailsRepository.getAttendenceByLabourIdAndBetweenDate(empId, fromDate, toDate);
+			System.out.println("res:"+getEmployeeReportDetailsList.toString());
+			 
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		
+		return getEmployeeReportDetailsList;
+	}
 	
 	
 } 
