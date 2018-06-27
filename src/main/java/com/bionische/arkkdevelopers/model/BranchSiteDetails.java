@@ -28,6 +28,9 @@ public class BranchSiteDetails {
 	@Column(name = "address")
 	private String address;
 
+	@Column(name = "device_id")
+	private int deviceId;
+	
 	@Column(name = "string_2")
 	private String string_2;
 
@@ -123,13 +126,19 @@ public class BranchSiteDetails {
 		this.int_1 = int_1;
 	}
 
+	public int getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(int deviceId) {
+		this.deviceId = deviceId;
+	}
+
 	@Override
 	public String toString() {
 		return "BranchSiteDetails [branchSiteId=" + branchSiteId + ", name=" + name + ", date=" + date + ", contact="
-				+ contact + ", address=" + address + ", string_2=" + string_2 + ", string_1=" + string_1 + ", type="
-				+ type + ", int_2=" + int_2 + ", int_1=" + int_1 + "]";
+				+ contact + ", address=" + address + ", deviceId=" + deviceId + ", string_2=" + string_2 + ", string_1="
+				+ string_1 + ", type=" + type + ", int_2=" + int_2 + ", int_1=" + int_1 + "]";
 	}
-	
-	
 
 }

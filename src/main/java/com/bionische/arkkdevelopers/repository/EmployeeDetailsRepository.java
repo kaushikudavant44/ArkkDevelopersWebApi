@@ -23,7 +23,7 @@ public interface EmployeeDetailsRepository extends JpaRepository<EmployeeDetails
 	
 	@Transactional
 	@Modifying
-	@Query("UPDATE EmployeeDetails  SET int1 =1 WHERE empId=:empId")
-	int updateEmployeeDeleteStatus(@Param("empId")int empId);
+	@Query("UPDATE EmployeeDetails  SET int1=1 WHERE empId=:employeeId")
+	int updateEmployeeDeleteStatus(@Param("employeeId")int employeeId);
 	
 }
