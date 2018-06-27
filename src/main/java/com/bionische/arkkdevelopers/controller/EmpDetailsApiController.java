@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bionische.arkkdevelopers.model.AttendanceDetails;
 import com.bionische.arkkdevelopers.model.BranchSiteDetails;
 import com.bionische.arkkdevelopers.model.EmployeeDetails;
 import com.bionische.arkkdevelopers.model.GetEmployeeReportDetails;
 import com.bionische.arkkdevelopers.model.Info;
+import com.bionische.arkkdevelopers.repository.AttendanceDetailsRepository;
 import com.bionische.arkkdevelopers.repository.BranchSiteDetailsRepository;
 import com.bionische.arkkdevelopers.repository.EmployeeDetailsRepository;
 import com.bionische.arkkdevelopers.repository.GetEmployeeReportDetailsRepository;
@@ -30,6 +32,9 @@ public class EmpDetailsApiController {
 	
 	@Autowired
 	GetEmployeeReportDetailsRepository getEmployeeReportDetailsRepository;
+	
+	@Autowired
+	AttendanceDetailsRepository attendanceDetailsRepository;
 	
 	
 	@RequestMapping(value = { "/insertEmployeeDetails" }, method = RequestMethod.POST)
@@ -193,10 +198,7 @@ public class EmpDetailsApiController {
 		
 		return info;
 	}
-	
-	
-	
-	
+
 	
 	@RequestMapping(value = { "/getEmpAttendenceByEmpIdAndDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetEmployeeReportDetails> getEmpAttendenceByEmpIdAndDate(@RequestParam("empId") String empId, @RequestParam("fromDate")String fromDate, @RequestParam("toDate")String toDate)
@@ -217,4 +219,19 @@ public class EmpDetailsApiController {
 		return getEmployeeReportDetailsList;
 	}
 	
+	@RequestMapping(value = { "/insertEmployeeManualAttendance" }, method = RequestMethod.POST)
+	public @ResponseBody AttendanceDetails insertEmployeeManualAttendance(@RequestBody AttendanceDetails attendanceDetails)
+	{
+		AttendanceDetails attendanceDetailsRes=new AttendanceDetails();
+		try
+		{
+			attendanceDetailsRes= attendanceDetailsRepository.save(attendanceDetails);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		
+		return attendanceDetailsRes;
+	}
 }
