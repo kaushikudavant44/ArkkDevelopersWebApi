@@ -1,6 +1,6 @@
 package com.bionische.arkkdevelopers.controller;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bionische.arkkdevelopers.model.BranchSiteDetails;
 import com.bionische.arkkdevelopers.model.EmployeeDetails;
+import com.bionische.arkkdevelopers.model.GetEmployeeReportDetails;
 import com.bionische.arkkdevelopers.model.Info;
 import com.bionische.arkkdevelopers.repository.BranchSiteDetailsRepository;
 import com.bionische.arkkdevelopers.repository.EmployeeDetailsRepository;
+import com.bionische.arkkdevelopers.repository.GetEmployeeReportDetailsRepository;
 
 @RestController
 public class EmpDetailsApiController {
@@ -25,6 +27,9 @@ public class EmpDetailsApiController {
 	
 	@Autowired 
 	BranchSiteDetailsRepository branchSiteDetailsRepository;
+	
+	@Autowired
+	GetEmployeeReportDetailsRepository getEmployeeReportDetailsRepository;
 	
 	
 	@RequestMapping(value = { "/insertEmployeeDetails" }, method = RequestMethod.POST)
@@ -187,6 +192,29 @@ public class EmpDetailsApiController {
 		
 		
 		return info;
+	}
+	
+	
+	
+	
+	
+	@RequestMapping(value = { "/getEmpAttendenceByEmpIdAndDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetEmployeeReportDetails> getEmpAttendenceByEmpIdAndDate(@RequestParam("empId") String empId, @RequestParam("fromDate")String fromDate, @RequestParam("toDate")String toDate)
+	{
+		List<GetEmployeeReportDetails> getEmployeeReportDetailsList=new ArrayList<GetEmployeeReportDetails>();
+		Info info=new Info();
+		try
+		{
+			getEmployeeReportDetailsList= getEmployeeReportDetailsRepository.getAttendenceByEmpIdAndBetweenDate(empId, fromDate, toDate);
+			System.out.println("res:"+getEmployeeReportDetailsList.toString());
+			 
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		
+		return getEmployeeReportDetailsList;
 	}
 	
 }
