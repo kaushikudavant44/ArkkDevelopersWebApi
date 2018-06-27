@@ -105,13 +105,14 @@ catch (Exception e) {
 	
 	
 	@RequestMapping(value = { "/getEmpAttendenceByLabourIdAndDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetEmployeeReportDetails> getEmpAttendenceByLabourIdAndDate(@RequestParam("labourId") String empId, @RequestParam("from")String fromDate, @RequestParam("to")String toDate)
+	public @ResponseBody List<GetEmployeeReportDetails> getEmpAttendenceByLabourIdAndDate(@RequestParam("userId") String empId, @RequestParam("from")String fromDate, @RequestParam("to")String toDate)
 	{
+		System.out.println("dsfsf");
 		List<GetEmployeeReportDetails> getEmployeeReportDetailsList=new ArrayList<GetEmployeeReportDetails>();
 		Info info=new Info();
 		try
 		{
-			getEmployeeReportDetailsList= getEmployeeReportDetailsRepository.getAttendenceByLabourIdAndBetweenDate(empId, fromDate, toDate);
+			getEmployeeReportDetailsList= getEmployeeReportDetailsRepository.getAttendenceByUserIdAndBetweenDate(empId, fromDate, toDate);
 			System.out.println("res:"+getEmployeeReportDetailsList.toString());
 			 
 		}
