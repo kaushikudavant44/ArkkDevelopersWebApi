@@ -16,5 +16,5 @@ public interface GetEmployeeReportDetailsRepository extends JpaRepository<GetEmp
 			+ " AND da.Direction='out'), 0)AS out_time FROM DeviceLogs d, emp_details e, branch_site_details b WHERE"
 			+ " d.UserId=e.emp_id AND d.UserId=:userId AND d.Direction='out' AND d.LogDate BETWEEN :fromDate AND :toDate GROUP by d.LogDate" ,nativeQuery=true)
 	List<GetEmployeeReportDetails> getAttendenceByEmpIdAndBetweenDate(@Param("userId")String userId, @Param("fromDate")String fromDate, @Param("toDate")String toDate);
-	
+	 
 }
