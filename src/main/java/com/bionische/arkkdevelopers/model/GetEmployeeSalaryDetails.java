@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+ 
 
 @Entity
 public class GetEmployeeSalaryDetails {
@@ -14,14 +17,13 @@ public class GetEmployeeSalaryDetails {
 	@Column(name="emp_id")
 	private int empId;
 	
-	@Column(name="no_of_days")
+	 @Transient
 	private int noOfDays;
 	
 	@Column(name="name")
 	private String name;
 	
-	@Column(name="branch")
-	private String branch;
+ 
 	
 	@Column(name="salary")
 	private int salary;
@@ -50,14 +52,7 @@ public class GetEmployeeSalaryDetails {
 		this.name = name;
 	}
 
-	public String getBranch() {
-		return branch;
-	}
-
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-
+	 
 	public int getSalary() {
 		return salary;
 	}
@@ -66,12 +61,7 @@ public class GetEmployeeSalaryDetails {
 		this.salary = salary;
 	}
 
-	@Override
-	public String toString() {
-		return "GetEmployeeSalaryDetails [empId=" + empId + ", noOfDays=" + noOfDays + ", name=" + name + ", branch="
-				+ branch + ", salary=" + salary + "]";
-	}
-	
+	 
 	
 	
 
