@@ -1,7 +1,9 @@
 package com.bionische.arkkdevelopers.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bionische.arkkdevelopers.model.GetEmployeeReportDetails;
 import com.bionische.arkkdevelopers.model.GetEmployeeSalaryDetails;
+import com.bionische.arkkdevelopers.model.GetLabourSalaryDetails;
+import com.bionische.arkkdevelopers.model.LabourSalaryDetailsList;
 import com.bionische.arkkdevelopers.repository.AttendanceDetailsRepository;
+import com.bionische.arkkdevelopers.repository.GetEmployeeReportDetailsRepository;
 import com.bionische.arkkdevelopers.repository.GetEmployeeSalaryDetailsRepository;
+import com.bionische.arkkdevelopers.repository.GetLabourSalaryDetailsRepository;
+ 
 
 @RestController
 public class SalaryCalculateApiController {
@@ -23,6 +31,14 @@ public class SalaryCalculateApiController {
 	
 	@Autowired
 	GetEmployeeSalaryDetailsRepository getEmployeeSalaryDetailsRepository;
+	
+	@Autowired
+	GetLabourSalaryDetailsRepository getLabourSalaryDetailsRepository;
+	
+	@Autowired
+	GetEmployeeReportDetailsRepository getEmployeeReportDetailsRepository;
+	
+ 
 	
 	
 	@RequestMapping(value = { "/getEmpSalaryDetails" }, method = RequestMethod.POST)
@@ -63,5 +79,74 @@ public class SalaryCalculateApiController {
 	}
 	
 	
+	@RequestMapping(value = { "/getLabourSalaryDetails" }, method = RequestMethod.POST)
+	public @ResponseBody GetLabourSalaryDetails getLabourSalaryDetails(@RequestParam("labourId") String labourId, @RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate)
+	
+	{
+		 
+	 
+		   
+		    
+		    GetLabourSalaryDetails getLabourSalaryDetails=new GetLabourSalaryDetails();
+		  
+		    List<GetEmployeeReportDetails> getEmployeeReportDetailsList=new ArrayList<GetEmployeeReportDetails>();
+		    try {
+		    	
+		   
+		    	getEmployeeReportDetailsList= getEmployeeReportDetailsRepository.getAttendenceByUserIdAndBetweenDate(labourId, fromDate, toDate);
+		    	  System.out.println("getEmployeeReportDetailsList   "+getEmployeeReportDetailsList.toString());
+		    }
+		    catch (Exception e) {
+				System.out.println(e.getMessage());// TODO: handle exception
+			}
+		    try {
+		    getLabourSalaryDetails= getLabourSalaryDetailsRepository.getEmpDetails(Integer.parseInt(labourId));
+		    System.out.println("getLabourSalaryDetails   "+getLabourSalaryDetails.toString());
+		    }
+		    catch (Exception e) {
+				System.out.println(e.getMessage());// TODO: handle exception
+			}
+		    LabourSalaryDetailsList labourSalaryDetails;
+		    List<LabourSalaryDetailsList> labourSalaryDetailsList=new ArrayList<LabourSalaryDetailsList>();
+		    float workingHour;
+		    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		    Date d2 = null;
+		    Date d1 =null;
+		    int workingDays=0;
+		    float salary=0;
+		    for(int i=0;i<getEmployeeReportDetailsList.size();i++)
+		    {
+		    	labourSalaryDetails=new LabourSalaryDetailsList();
+		    	 // workingHour=
+		    	    try {
+						d1 = format.parse(getEmployeeReportDetailsList.get(i).getInTime());
+						d2=format.parse(getEmployeeReportDetailsList.get(i).getOutTime());
+						    workingHour = d2.getTime() - d1.getTime();
+						   
+						    float diffHours = workingHour / (60 * 60 * 1000) % 24;
+						    System.out.println("diffHours  "+diffHours);
+						    labourSalaryDetails.setWorkingHour(diffHours);
+						    salary=salary+((getLabourSalaryDetails.getSalary()/8)*diffHours);
+						    labourSalaryDetails.setAmount(((getLabourSalaryDetails.getSalary()/8)*diffHours));
+						    labourSalaryDetails.setDate(getEmployeeReportDetailsList.get(i).getDate());
+						    labourSalaryDetails.setInTime(getEmployeeReportDetailsList.get(i).getInTime());
+						    labourSalaryDetails.setOutTime(getEmployeeReportDetailsList.get(i).getOutTime());
+						    labourSalaryDetailsList.add(labourSalaryDetails);
+						    ++workingDays;
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		    	    getLabourSalaryDetails.setLabourSalaryDetailsList(labourSalaryDetailsList);
+		    	    getLabourSalaryDetails.setNoOfDays(workingDays);
+		    	    getLabourSalaryDetails.setSalary(Math.round(salary));
+		    	//labourSalaryDetailsList.setAmount(amount);
+		    	
+		    }
+		    
+		    
+		    System.out.println("getLabourSalaryDetails   "+getLabourSalaryDetails.toString());
+		return getLabourSalaryDetails;
+	}
 	
 }
