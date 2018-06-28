@@ -26,7 +26,7 @@ public class SalaryCalculateApiController {
 	
 	
 	@RequestMapping(value = { "/getEmpSalaryDetails" }, method = RequestMethod.POST)
-	public @ResponseBody GetEmployeeSalaryDetails getEmpSalaryDetails(@RequestParam("empId") String empId, @RequestParam("month") int month,@RequestParam("year") int year)
+	public @ResponseBody List<GetEmployeeSalaryDetails> getEmpSalaryDetails(@RequestParam("empId") String empId, @RequestParam("month") int month,@RequestParam("year") int year)
 	
 	{
 		 
@@ -47,6 +47,8 @@ public class SalaryCalculateApiController {
 		        }
 		    } 
 		    GetEmployeeSalaryDetails getEmployeeSalaryDetails=new GetEmployeeSalaryDetails();
+		    
+		    List<GetEmployeeSalaryDetails> getEmployeeSalaryDetailsList=new ArrayList<GetEmployeeSalaryDetails>();
 		    int attendDayCount=attendanceDetailsRepository.getEmpDayCount(empId, year+"-"+month+"-01", year+"-"+month+"-"+daysInMonth);
 		    getEmployeeSalaryDetails= getEmployeeSalaryDetailsRepository.getEmpDetails(Integer.parseInt(empId));
 		    
@@ -54,8 +56,10 @@ public class SalaryCalculateApiController {
 		    
 		    getEmployeeSalaryDetails.setNoOfDays(attendDayCount);
 		    getEmployeeSalaryDetails.setSalary((Math.round(basicSalary*attendDayCount)));
-		    System.out.println("attendDayCount  "+attendDayCount);
-		return getEmployeeSalaryDetails;
+		    
+		    getEmployeeSalaryDetailsList.add(getEmployeeSalaryDetails);
+		    System.out.println("getEmployeeSalaryDetails  "+getEmployeeSalaryDetails.toString());
+		return getEmployeeSalaryDetailsList;
 	}
 	
 	

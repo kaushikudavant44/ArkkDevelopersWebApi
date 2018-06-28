@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "devicelogs")
+@Table(name="DeviceLogs")
 public class AttendanceDetails {
 
-	@Id
+	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "DeviceLogId")
 	private int deviceLogId;

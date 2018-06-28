@@ -222,6 +222,8 @@ public class EmpDetailsApiController {
 	@RequestMapping(value = { "/insertEmployeeManualAttendance" }, method = RequestMethod.POST)
 	public @ResponseBody AttendanceDetails insertEmployeeManualAttendance(@RequestBody AttendanceDetails attendanceDetails)
 	{
+		
+		System.out.println("sscdcscs");
 		AttendanceDetails attendanceDetailsRes=new AttendanceDetails();
 		try
 		{
@@ -230,8 +232,7 @@ public class EmpDetailsApiController {
 		catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
 		}
-		
-		
+			
 		return attendanceDetailsRes;
 	}
 }
