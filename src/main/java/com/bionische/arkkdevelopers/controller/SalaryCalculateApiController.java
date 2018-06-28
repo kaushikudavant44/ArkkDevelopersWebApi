@@ -21,7 +21,7 @@ import com.bionische.arkkdevelopers.repository.AttendanceDetailsRepository;
 import com.bionische.arkkdevelopers.repository.GetEmployeeReportDetailsRepository;
 import com.bionische.arkkdevelopers.repository.GetEmployeeSalaryDetailsRepository;
 import com.bionische.arkkdevelopers.repository.GetLabourSalaryDetailsRepository;
- 
+  
 
 @RestController
 public class SalaryCalculateApiController {
