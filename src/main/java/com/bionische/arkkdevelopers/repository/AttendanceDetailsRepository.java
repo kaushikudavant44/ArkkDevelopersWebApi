@@ -21,6 +21,6 @@ public interface AttendanceDetailsRepository extends JpaRepository<AttendanceDet
 
 	int getEmpDayCount(@Param("empId")String empId, @Param("fromDate")String fromDate, @Param("toDate")String toDate);
 	
- 
+  
  	
 }
