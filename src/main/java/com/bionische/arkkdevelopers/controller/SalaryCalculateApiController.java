@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bionische.arkkdevelopers.model.GetBranchEmployeeReportDetails;
 import com.bionische.arkkdevelopers.model.GetEmployeeReportDetails;
 import com.bionische.arkkdevelopers.model.GetEmployeeSalaryDetails;
 import com.bionische.arkkdevelopers.model.GetLabourSalaryDetails;
 import com.bionische.arkkdevelopers.model.LabourSalaryDetailsList;
 import com.bionische.arkkdevelopers.repository.AttendanceDetailsRepository;
+import com.bionische.arkkdevelopers.repository.GetBranchEmployeeReportDetailsRepository;
 import com.bionische.arkkdevelopers.repository.GetEmployeeReportDetailsRepository;
 import com.bionische.arkkdevelopers.repository.GetEmployeeSalaryDetailsRepository;
 import com.bionische.arkkdevelopers.repository.GetLabourSalaryDetailsRepository;
@@ -38,13 +40,14 @@ public class SalaryCalculateApiController {
 	@Autowired
 	GetEmployeeReportDetailsRepository getEmployeeReportDetailsRepository;
 	
- 
+	@Autowired
+	GetBranchEmployeeReportDetailsRepository getBranchEmployeeReportDetailsRepository;
 	
 	
 	@RequestMapping(value = { "/getEmpSalaryDetails" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetEmployeeSalaryDetails> getEmpSalaryDetails(@RequestParam("empId") String empId, @RequestParam("month") int month,@RequestParam("year") int year)
 	
-	{
+	{ 
 		 
 	 
 		  
@@ -147,6 +150,83 @@ public class SalaryCalculateApiController {
 		    
 		    System.out.println("getLabourSalaryDetails   "+getLabourSalaryDetails.toString());
 		return getLabourSalaryDetails;
+	}
+	
+	
+	@RequestMapping(value = { "/getLabourSalaryDetailsBySite" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBranchEmployeeReportDetails> getLabourSalaryDetailsBySite(@RequestParam("siteId") String siteId, @RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate)
+	{
+	 List<GetBranchEmployeeReportDetails> getBranchEmployeeReportDetails=new ArrayList<GetBranchEmployeeReportDetails>();
+	
+	
+		try {
+			getBranchEmployeeReportDetails=getBranchEmployeeReportDetailsRepository.getAttendenceBySiteAndBetweenDate(siteId, fromDate, toDate);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		    Date d2 = null;
+		    Date d1 =null;
+		     
+		    float workingHour;
+		  for(int i=0;i<getBranchEmployeeReportDetails.size();i++)
+		    {
+		 try {
+				d1 = format.parse(getBranchEmployeeReportDetails.get(i).getInTime());
+				d2=format.parse(getBranchEmployeeReportDetails.get(i).getOutTime());
+				    workingHour = d2.getTime() - d1.getTime();
+				    float diffHours = workingHour / (60 * 60 * 1000) % 24;
+				    getBranchEmployeeReportDetails.get(i).setSalary(Math.round((getBranchEmployeeReportDetails.get(i).getSalary()/8)+diffHours));
+				    
+		 }catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		    }
+		  System.out.println(getBranchEmployeeReportDetails.toString());
+		return getBranchEmployeeReportDetails;
+		
+	}
+
+	
+	
+	
+	
+	@RequestMapping(value = { "/getEmployeeSalaryDetailsBySite" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBranchEmployeeReportDetails> getEmployeeSalaryDetailsBySite(@RequestParam("branchId") String branchId, @RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate)
+	{
+	 List<GetBranchEmployeeReportDetails> getBranchEmployeeReportDetails=new ArrayList<GetBranchEmployeeReportDetails>();
+	
+	
+		try {
+			getBranchEmployeeReportDetails=getBranchEmployeeReportDetailsRepository.getAttendenceByBranchAndBetweenDate(branchId, fromDate, toDate);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		    Date d2 = null;
+		    Date d1 =null;
+		     
+		    float workingHour;
+		  for(int i=0;i<getBranchEmployeeReportDetails.size();i++)
+		    {
+		 try {
+				d1 = format.parse(getBranchEmployeeReportDetails.get(i).getInTime());
+				d2=format.parse(getBranchEmployeeReportDetails.get(i).getOutTime());
+				    workingHour = d2.getTime() - d1.getTime();
+				    float diffHours = workingHour / (60 * 60 * 1000) % 24;
+				    getBranchEmployeeReportDetails.get(i).setSalary(Math.round((getBranchEmployeeReportDetails.get(i).getSalary()/8)+diffHours));
+				    
+		 }catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		    }
+		  System.out.println(getBranchEmployeeReportDetails.toString());
+		return getBranchEmployeeReportDetails;
+		
 	}
 	
 }

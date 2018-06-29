@@ -20,4 +20,7 @@ public interface AttendanceDetailsRepository extends JpaRepository<AttendanceDet
 	@Query(value="Select count(DeviceLogId) from DeviceLogs where UserId=:empId AND LogDate BETWEEN :fromDate AND :toDate AND Direction='out'" ,nativeQuery=true)
 
 	int getEmpDayCount(@Param("empId")String empId, @Param("fromDate")String fromDate, @Param("toDate")String toDate);
+	
+ 
+ 	
 }

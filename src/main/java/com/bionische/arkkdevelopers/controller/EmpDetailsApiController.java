@@ -227,7 +227,9 @@ public class EmpDetailsApiController {
 		AttendanceDetails attendanceDetailsRes=new AttendanceDetails();
 		try
 		{
+			//attendanceDetailsRes= attendanceDetailsRepository.saveData(attendanceDetails.getDirection(), attendanceDetails.getLogDate(), attendanceDetails.getUserId(), attendanceDetails.getDeviceId(), attendanceDetails.getDeviceLogId());
 			attendanceDetailsRes= attendanceDetailsRepository.save(attendanceDetails);
+			
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
