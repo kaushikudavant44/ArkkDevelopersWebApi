@@ -125,4 +125,24 @@ catch (Exception e) {
 	}
 	
 	
+	@RequestMapping(value = { "/getAttendenceBySiteAndBetweenDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetEmployeeReportDetails> getAttendenceBySiteAndBetweenDate(@RequestParam("site") String site, @RequestParam("from")String fromDate, @RequestParam("to")String toDate)
+	{
+		System.out.println("dsfsf");
+		List<GetEmployeeReportDetails> getEmployeeReportDetailsList=new ArrayList<GetEmployeeReportDetails>();
+		Info info=new Info();
+		try
+		{
+			getEmployeeReportDetailsList= getEmployeeReportDetailsRepository.getAttendenceBySiteAndBetweenDate(site, fromDate, toDate);
+			System.out.println("res:"+getEmployeeReportDetailsList.toString());
+			 
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		
+		return getEmployeeReportDetailsList;
+	}
+	
 } 

@@ -32,4 +32,14 @@ public interface GetEmployeeReportDetailsRepository extends JpaRepository<GetEmp
 			+ " d.DeviceId=:deviceId AND d.Direction='out' AND d.LogDate BETWEEN :fromDate AND :toDate AND d.DeviceId=b.device_id GROUP by d.LogDate"  ,nativeQuery=true)
 
 	List<GetEmployeeReportDetails> getAttendenceBySiteAndBetweenDate(@Param("deviceId")String deviceId, @Param("fromDate")String fromDate, @Param("toDate")String toDate);
+
+	
+	@Query(value="SELECT d.DeviceLogId as device_log_id,d.DeviceId, d.UserId as user_id, e.name,e.salary, b.name as branch, DATE(d.LogDate)as date, COALESCE((SELECT TIME(dd.LogDate) FROM DeviceLogs dd WHERE"
+			+ " d.DeviceId=dd.DeviceId AND dd.UserId=d.UserId AND DATE(dd.LogDate)=DATE(d.LogDate) AND dd.Direction='in'), 0)AS in_time, COALESCE((SELECT TIME(da.LogDate) FROM DeviceLogs da WHERE d.DeviceId=da.DeviceId AND da.UserId=d.UserId"
+			+ " AND DATE(da.LogDate)=DATE(d.LogDate) AND da.Direction='out'), 0)AS out_time FROM DeviceLogs d, emp_details e, branch_site_details b WHERE d.UserId=e.emp_id AND"
+			+ " d.DeviceId=:deviceId AND d.Direction='out' AND d.LogDate BETWEEN :fromDate AND :toDate AND d.DeviceId=b.device_id GROUP by d.LogDate"  ,nativeQuery=true)
+
+	List<GetEmployeeReportDetails> getAttendenceByBranchAndBetweenDate(@Param("deviceId")String deviceId, @Param("fromDate")String fromDate, @Param("toDate")String toDate);
+
+	
 }

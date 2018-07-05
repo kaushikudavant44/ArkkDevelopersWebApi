@@ -237,4 +237,25 @@ public class EmpDetailsApiController {
 			
 		return attendanceDetailsRes;
 	}
+	
+	
+	@RequestMapping(value = { "/getAttendenceByBranchAndBetweenDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetEmployeeReportDetails> getAttendenceByBranchAndBetweenDate(@RequestParam("branch") String branch, @RequestParam("fromDate")String fromDate, @RequestParam("toDate")String toDate)
+	{
+		List<GetEmployeeReportDetails> getEmployeeReportDetailsList=new ArrayList<GetEmployeeReportDetails>();
+		Info info=new Info();
+		try
+		{
+			getEmployeeReportDetailsList= getEmployeeReportDetailsRepository.getAttendenceByBranchAndBetweenDate(branch, fromDate, toDate);
+			System.out.println("res:"+getEmployeeReportDetailsList.toString());
+			 
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
+		
+		return getEmployeeReportDetailsList;
+	}
+	
 }
