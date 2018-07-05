@@ -249,7 +249,7 @@ public class EmpDetailsApiController {
 			getEmployeeReportDetailsList= getEmployeeReportDetailsRepository.getAttendenceByBranchAndBetweenDate(branch, fromDate, toDate);
 			System.out.println("res:"+getEmployeeReportDetailsList.toString());
 			 
-		}
+		} 
 		catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
 		}
