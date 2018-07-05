@@ -41,10 +41,10 @@ public class BranchSiteDetails {
 	private int type;
 
 	@Column(name = "int_2")
-	private int int_2;
+	private int int2;
 
 	@Column(name = "int_1")
-	private int int_1;
+	private int int1;
 
 	public int getBranchSiteId() {
 		return branchSiteId;
@@ -110,22 +110,6 @@ public class BranchSiteDetails {
 		this.type = type;
 	}
 
-	public int getInt_2() {
-		return int_2;
-	}
-
-	public void setInt_2(int int_2) {
-		this.int_2 = int_2;
-	}
-
-	public int getInt_1() {
-		return int_1;
-	}
-
-	public void setInt_1(int int_1) {
-		this.int_1 = int_1;
-	}
-
 	public int getDeviceId() {
 		return deviceId;
 	}
@@ -134,11 +118,27 @@ public class BranchSiteDetails {
 		this.deviceId = deviceId;
 	}
 
+	public int getInt2() {
+		return int2;
+	}
+
+	public void setInt2(int int2) {
+		this.int2 = int2;
+	}
+
+	public int getInt1() {
+		return int1;
+	}
+
+	public void setInt1(int int1) {
+		this.int1 = int1;
+	}
+
 	@Override
 	public String toString() {
 		return "BranchSiteDetails [branchSiteId=" + branchSiteId + ", name=" + name + ", date=" + date + ", contact="
 				+ contact + ", address=" + address + ", deviceId=" + deviceId + ", string_2=" + string_2 + ", string_1="
-				+ string_1 + ", type=" + type + ", int_2=" + int_2 + ", int_1=" + int_1 + "]";
+				+ string_1 + ", type=" + type + ", int2=" + int2 + ", int1=" + int1 + "]";
 	}
-
+ 
 }

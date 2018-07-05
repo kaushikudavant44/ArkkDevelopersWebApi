@@ -86,10 +86,10 @@ public class SalaryCalculateApiController {
 	public @ResponseBody GetLabourSalaryDetails getLabourSalaryDetails(@RequestParam("labourId") String labourId, @RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate)
 	
 	{
-		 
-	 
-		   
-		    
+	    System.out.println("details"+labourId+"from"+fromDate+"toDate"+toDate);
+	    fromDate=fromDate+" 00:00:00";
+	    toDate=toDate+" 23:59:59";
+	    
 		    GetLabourSalaryDetails getLabourSalaryDetails=new GetLabourSalaryDetails();
 		  
 		    List<GetEmployeeReportDetails> getEmployeeReportDetailsList=new ArrayList<GetEmployeeReportDetails>();
@@ -143,7 +143,7 @@ public class SalaryCalculateApiController {
 		    	    getLabourSalaryDetails.setLabourSalaryDetailsList(labourSalaryDetailsList);
 		    	    getLabourSalaryDetails.setNoOfDays(workingDays);
 		    	    getLabourSalaryDetails.setSalary(Math.round(salary));
-		    	//labourSalaryDetailsList.setAmount(amount);
+		    	    //labourSalaryDetailsList.setAmount(amount);
 		    	
 		    }
 		    
@@ -158,7 +158,8 @@ public class SalaryCalculateApiController {
 	{
 	 List<GetBranchEmployeeReportDetails> getBranchEmployeeReportDetails=new ArrayList<GetBranchEmployeeReportDetails>();
 	
-	
+	 fromDate=fromDate+" 00:00:00";
+	    toDate=toDate+" 23:59:59";
 		try {
 			getBranchEmployeeReportDetails=getBranchEmployeeReportDetailsRepository.getAttendenceBySiteAndBetweenDate(siteId, fromDate, toDate);
 		}
@@ -177,8 +178,10 @@ public class SalaryCalculateApiController {
 				d1 = format.parse(getBranchEmployeeReportDetails.get(i).getInTime());
 				d2=format.parse(getBranchEmployeeReportDetails.get(i).getOutTime());
 				    workingHour = d2.getTime() - d1.getTime();
+				    System.out.println("minutes="+workingHour);
 				    float diffHours = workingHour / (60 * 60 * 1000) % 24;
-				    getBranchEmployeeReportDetails.get(i).setSalary(Math.round((getBranchEmployeeReportDetails.get(i).getSalary()/8)+diffHours));
+				    System.out.println("diffHours="+diffHours);
+				    getBranchEmployeeReportDetails.get(i).setSalary(Math.round((getBranchEmployeeReportDetails.get(i).getSalary()/8)*	diffHours));
 				    
 		 }catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception

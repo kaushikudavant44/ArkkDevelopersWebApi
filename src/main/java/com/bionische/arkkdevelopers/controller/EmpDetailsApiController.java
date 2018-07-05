@@ -162,7 +162,7 @@ public class EmpDetailsApiController {
 		try
 		{
 			
-			branchSiteDetailsList= branchSiteDetailsRepository.findByType(type);
+			branchSiteDetailsList= branchSiteDetailsRepository.findByTypeAndInt1(type,0);
 		} 
 		catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
